@@ -1,0 +1,1154 @@
+[
+    {
+        "id": "08b8f9d88508dfbf",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "644ff21eae7ba829",
+        "type": "modbus-client",
+        "name": "iHomeManager",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.145",
+        "tcpPort": "503",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 247,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true,
+        "info": "# Daten des iHomeManager\n\nDer iHomeManager sollte eine feste IP-Adresse zugewiesen bekommen (im Router).\nDiese IP-Adresse bitte hier (\"Host\") eintragen.\n"
+    },
+    {
+        "id": "1dceb4c05a9698f3",
+        "type": "modbus-client",
+        "name": "iDM",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.105",
+        "tcpPort": 502,
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true,
+        "info": "# iDM Navigator\n\nDer iDM Navigator sollte eine feste IP-Adresse bekommen\n(entweder im Router oder direkt im Navigator unter \"Einstellungen\" - \"Allgemeine Einstellungen\" - \"Netzwerkeinstellungen\").\nDiese IP-Adresse bitte hier (\"Host\") eintragen."
+    },
+    {
+        "id": "0930e28246151788",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0bebb2caee8c5f4b",
+        "type": "buffer-maker",
+        "z": "08b8f9d88508dfbf",
+        "name": "Float to Buffer",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "name": "item1",
+                "type": "floatbe",
+                "length": 1,
+                "dataType": "msg",
+                "data": "payload"
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "x": 800,
+        "y": 300,
+        "wires": [
+            [
+                "66835f3fe395ba20",
+                "3d241f16fd77132f"
+            ]
+        ]
+    },
+    {
+        "id": "66835f3fe395ba20",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "571571cc6501e2fe",
+        "type": "modbus-write",
+        "z": "08b8f9d88508dfbf",
+        "name": "iDM 78",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "78",
+        "quantity": "2",
+        "server": "1dceb4c05a9698f3",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 1200,
+        "y": 300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6430cb69821048bb",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "3d241f16fd77132f",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Bytes to UInt16BE",
+        "func": "var buf = msg.payload;\nmsg.payload = [\n    buf.readUInt16BE(2),\n    buf.readUInt16BE(0)\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 300,
+        "wires": [
+            [
+                "6430cb69821048bb",
+                "571571cc6501e2fe"
+            ]
+        ]
+    },
+    {
+        "id": "20197d9a4a11fb55",
+        "type": "modbus-read",
+        "z": "08b8f9d88508dfbf",
+        "name": "Hausverbrauch",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "8158",
+        "quantity": "2",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "644ff21eae7ba829",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "d86cab73615aa5ac"
+            ],
+            []
+        ],
+        "info": "# Hausverbrauch\n\nErmittelt den Hausverbrauch über das Register 8159\n(\"Total load active power\")"
+    },
+    {
+        "id": "8df2544788db302d",
+        "type": "buffer-parser",
+        "z": "08b8f9d88508dfbf",
+        "name": "S32 to Float",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "int32le",
+                "name": "item1",
+                "offset": 0,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "0.01",
+                "mask": ""
+            }
+        ],
+        "swap1": "swap16",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "value",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 570,
+        "y": 420,
+        "wires": [
+            [
+                "33407b7fd32bdbe3",
+                "5c371ef2bb463cdd"
+            ]
+        ]
+    },
+    {
+        "id": "33407b7fd32bdbe3",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5c371ef2bb463cdd",
+        "type": "buffer-maker",
+        "z": "08b8f9d88508dfbf",
+        "name": "Float to Buffer",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "name": "item1",
+                "type": "floatbe",
+                "length": 1,
+                "dataType": "msg",
+                "data": "payload"
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "b6db7b44fb4d5048"
+            ]
+        ]
+    },
+    {
+        "id": "b6db7b44fb4d5048",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Bytes to UInt16BE",
+        "func": "var buf = msg.payload;\nmsg.payload = [\n    buf.readUInt16BE(2),\n    buf.readUInt16BE(0)\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 420,
+        "wires": [
+            [
+                "751824d47fa648a8"
+            ]
+        ]
+    },
+    {
+        "id": "751824d47fa648a8",
+        "type": "modbus-write",
+        "z": "08b8f9d88508dfbf",
+        "name": "iDM 82",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "82",
+        "quantity": "2",
+        "server": "1dceb4c05a9698f3",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 1200,
+        "y": 420,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2f6b68e4940b3f1c",
+        "type": "modbus-read",
+        "z": "08b8f9d88508dfbf",
+        "name": "Einspeisung",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "8156",
+        "quantity": "2",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "644ff21eae7ba829",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "05fc49f57a7d48ea"
+            ],
+            []
+        ],
+        "info": "# Einspeisung\n\nErmittelt die momentane Einspeiseleistung über das Register\n8157 (\"Total active power of grid connection point\").\nPositiv: Stromüberschuß\nNegativ: Strombezug aus dem Netz"
+    },
+    {
+        "id": "1b698ab72bf3b63e",
+        "type": "buffer-parser",
+        "z": "08b8f9d88508dfbf",
+        "name": "S32 to Float",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "int32le",
+                "name": "item1",
+                "offset": 0,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "0.01",
+                "mask": ""
+            }
+        ],
+        "swap1": "swap16",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "value",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 570,
+        "y": 560,
+        "wires": [
+            [
+                "65b28aa5bb800ed3",
+                "be914f66fa3c979a"
+            ]
+        ]
+    },
+    {
+        "id": "65b28aa5bb800ed3",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "147b7e03a51af82d",
+        "type": "buffer-maker",
+        "z": "08b8f9d88508dfbf",
+        "name": "Float to Buffer",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "name": "item1",
+                "type": "floatbe",
+                "length": 1,
+                "dataType": "msg",
+                "data": "payload"
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "x": 940,
+        "y": 560,
+        "wires": [
+            [
+                "969f409b0e51f22d"
+            ]
+        ]
+    },
+    {
+        "id": "969f409b0e51f22d",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Bytes to UInt16BE",
+        "func": "var buf = msg.payload;\nmsg.payload = [\n    buf.readUInt16BE(2),\n    buf.readUInt16BE(0)\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 560,
+        "wires": [
+            [
+                "30e61023ec0020df"
+            ]
+        ]
+    },
+    {
+        "id": "30e61023ec0020df",
+        "type": "modbus-write",
+        "z": "08b8f9d88508dfbf",
+        "name": "iDM 74",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "74",
+        "quantity": "2",
+        "server": "1dceb4c05a9698f3",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 1340,
+        "y": 560,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "be914f66fa3c979a",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Vorzeichen",
+        "func": "var value = msg.payload[0];\n/*\nif(value < 0) {\n    msg.payload = [ -value ];\n} else {\n    msg.payload = [ 0.0 ];\n}\n*/\nmsg.payload = [ -value ];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 560,
+        "wires": [
+            [
+                "147b7e03a51af82d",
+                "f4d5d3a7eb72fdc8"
+            ]
+        ]
+    },
+    {
+        "id": "f4d5d3a7eb72fdc8",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "115834fe4f3787f9",
+        "type": "modbus-read",
+        "z": "08b8f9d88508dfbf",
+        "name": "Batterie SOC",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "8162",
+        "quantity": "1",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "644ff21eae7ba829",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "79fbbb9af39fa489"
+            ],
+            []
+        ],
+        "info": "# Batterie-Ladestand\n\nErmittelt den aktuellen Ladestand der Batterie über das\nRegister 8163 (\"Battery level (SOC)\")."
+    },
+    {
+        "id": "281d77a0eab39463",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Skalierung",
+        "func": "msg.payload = [ Math.floor(msg.payload / 10) ];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 680,
+        "wires": [
+            [
+                "1484d4a69c402465",
+                "457338d22a1fa6b1"
+            ]
+        ],
+        "info": "Der iHomeManager liefert einen U16-Wert, der mit 0,1 skaliert\nwird. Der iDM Navigator möchte einen ganzzahligen Wert.\nDaher wird der Wert vom iHomeManager durch 10 geteilt\nund die Nachkommastellen werden abgeschnitten."
+    },
+    {
+        "id": "1484d4a69c402465",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "457338d22a1fa6b1",
+        "type": "modbus-write",
+        "z": "08b8f9d88508dfbf",
+        "name": "iDM 86",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "86",
+        "quantity": "1",
+        "server": "1dceb4c05a9698f3",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 760,
+        "y": 680,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "cf63b058c196bf9a",
+        "type": "modbus-read",
+        "z": "08b8f9d88508dfbf",
+        "name": "Batterieentladung",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "8160",
+        "quantity": "2",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "644ff21eae7ba829",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 230,
+        "y": 820,
+        "wires": [
+            [
+                "7594eda7df57b296"
+            ],
+            []
+        ],
+        "info": "# Batterieentladung\n\nErmittelt den aktuellen Wert der Batterieentladung über das Register\n8161 (\"Battery power\").\nPositiv: Batterie wird entladen\nNegativ: Batterie wird aufgeladen"
+    },
+    {
+        "id": "20bec567e5213e27",
+        "type": "buffer-parser",
+        "z": "08b8f9d88508dfbf",
+        "name": "S32 to Float",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "int32le",
+                "name": "item1",
+                "offset": 0,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "0.01",
+                "mask": ""
+            }
+        ],
+        "swap1": "swap16",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "value",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 570,
+        "y": 820,
+        "wires": [
+            [
+                "213f77da8983561d",
+                "bfed8a038aeb49fa"
+            ]
+        ]
+    },
+    {
+        "id": "213f77da8983561d",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "bfed8a038aeb49fa",
+        "type": "buffer-maker",
+        "z": "08b8f9d88508dfbf",
+        "name": "Float to Buffer",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "name": "item1",
+                "type": "floatbe",
+                "length": 1,
+                "dataType": "msg",
+                "data": "payload"
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "x": 840,
+        "y": 820,
+        "wires": [
+            [
+                "7585ca02244587e2"
+            ]
+        ]
+    },
+    {
+        "id": "7585ca02244587e2",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Bytes to UInt16BE",
+        "func": "var buf = msg.payload;\nmsg.payload = [\n    buf.readUInt16BE(2),\n    buf.readUInt16BE(0)\n];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 820,
+        "wires": [
+            [
+                "afe0d7f6d7aa897f"
+            ]
+        ]
+    },
+    {
+        "id": "afe0d7f6d7aa897f",
+        "type": "modbus-write",
+        "z": "08b8f9d88508dfbf",
+        "name": "iDM 84",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "84",
+        "quantity": "2",
+        "server": "1dceb4c05a9698f3",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 1240,
+        "y": 820,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0d20a058d7826047",
+        "type": "modbus-read",
+        "z": "08b8f9d88508dfbf",
+        "name": "PV Produktion",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "8154",
+        "quantity": "8",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "644ff21eae7ba829",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "5e77fc8967f93bf8",
+                "8d7dbccdc31eba5d"
+            ],
+            []
+        ],
+        "info": "# PV Produktion\n\nLiest die Modbus-Register 8155-8162 (\"Total active power of inverter\"\nbis \"Battery power\"), um die gesamte Stromproduktion des\nWechselrichters zu ermitteln. Benötigt werden dazu die Register\n8155/8156 und 8161/8162."
+    },
+    {
+        "id": "5e77fc8967f93bf8",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8d7dbccdc31eba5d",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Register entfernen",
+        "func": "msg.payload.splice(2, 4);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "e6ade21d63b88b01",
+                "0967a8c96caaae7d"
+            ]
+        ]
+    },
+    {
+        "id": "e6ade21d63b88b01",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0967a8c96caaae7d",
+        "type": "buffer-parser",
+        "z": "08b8f9d88508dfbf",
+        "name": "S32 to Float",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "int32le",
+                "name": "item1",
+                "offset": 0,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "0.01",
+                "mask": ""
+            },
+            {
+                "type": "int32le",
+                "name": "item2",
+                "offset": 4,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "0.01",
+                "mask": ""
+            }
+        ],
+        "swap1": "swap16",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "value",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "d932dbff1521a2b1",
+                "c1619481ecc3541d"
+            ]
+        ]
+    },
+    {
+        "id": "d932dbff1521a2b1",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c1619481ecc3541d",
+        "type": "function",
+        "z": "08b8f9d88508dfbf",
+        "name": "Wechselrichter-Batterie",
+        "func": "msg.payload = [ Math.max(0, msg.payload[0] - msg.payload[1]) ];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "f0003d0fc85259cc",
+                "57ad97112f6c31a1"
+            ]
+        ],
+        "info": "Die Wechselrichterleistung ist beim iHomeManager gleich der\nPV-Produktion zuzüglich der momentanen Batterieleistung (diese ist\nnegativ, wenn die Batterie aufgeladen wird). Um die gesamte PV-Produktion\nzu erhalten, wird die Batterieleistung wieder abgezogen.\nFalls dabei ein negativer Wert entsteht, ist das Ergebnis 0."
+    },
+    {
+        "id": "f0003d0fc85259cc",
+        "type": "debug",
+        "z": "08b8f9d88508dfbf",
+        "d": true,
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "57ad97112f6c31a1",
+        "type": "rbe",
+        "z": "08b8f9d88508dfbf",
+        "name": "onChange",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 550,
+        "y": 300,
+        "wires": [
+            [
+                "0930e28246151788",
+                "0bebb2caee8c5f4b"
+            ]
+        ]
+    },
+    {
+        "id": "d86cab73615aa5ac",
+        "type": "rbe",
+        "z": "08b8f9d88508dfbf",
+        "name": "onChange",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "8df2544788db302d"
+            ]
+        ]
+    },
+    {
+        "id": "79fbbb9af39fa489",
+        "type": "rbe",
+        "z": "08b8f9d88508dfbf",
+        "name": "onChange",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "281d77a0eab39463"
+            ]
+        ]
+    },
+    {
+        "id": "7594eda7df57b296",
+        "type": "rbe",
+        "z": "08b8f9d88508dfbf",
+        "name": "onChange",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 410,
+        "y": 820,
+        "wires": [
+            [
+                "20bec567e5213e27"
+            ]
+        ]
+    },
+    {
+        "id": "05fc49f57a7d48ea",
+        "type": "rbe",
+        "z": "08b8f9d88508dfbf",
+        "name": "onChange",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 390,
+        "y": 560,
+        "wires": [
+            [
+                "1b698ab72bf3b63e"
+            ]
+        ]
+    },
+    {
+        "id": "e36708c14f1c41f9",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-modbus": "5.45.2",
+            "node-red-contrib-buffer-parser": "3.2.2"
+        }
+    }
+]
